@@ -14,8 +14,16 @@ class CongruenceClosure:
         print(self.parents)
 
     def hasChanged(self, last_state_parents):
-        return self.parents != last_state_parents #returns True if there was a change, o.w returns False 
-            
+        list1 = self.parents.copy()
+        list2 = last_state_parents
+        set_of_list1 = {frozenset(sublist) for sublist in list1}
+        set_of_list2 = {frozenset(sublist) for sublist in list2}
+
+        if set_of_list1 == set_of_list2: #returns True if there was a change, o.w returns False 
+            print("its falseeeeeeeeeeeeeeeeeeeeeeeeee")
+            return False
+        return True
+       
     def find_sublist(self, function_application):
         print("looking for sublist")
         for sub_list in self.parents:
@@ -83,7 +91,6 @@ class CongruenceClosure:
 
         return new_parents
 
-
     def merge_using_congruence(self, all_elements_in_cube, all_function_symbols_in_cube):
         new_parents = self.parents.copy()
         all_elements_in_cube_str = [str(element) for element in all_elements_in_cube] # String list of all elements in cube
@@ -130,12 +137,12 @@ class CongruenceClosure:
             print("new_parents (after each sub_list): ", new_parents)
 
         print("final new_parents after all iterations: ", new_parents)
-        return new_parents
+        # return new_parents
+        self.parents = new_parents
 
     # Checks if elements of tuples are in the same sub list in parents (list of lists)
     def are_elements_in_same_sublist(self, tpl):
         return all(any(elem in sublist for sublist in self.parents) for elem in tpl)
-
 
     def check_if_in_the_same_subset(self, zipped):
         for tup in zipped:
@@ -177,7 +184,6 @@ class CongruenceClosure:
             self.parents = self.merge_all_sub_lists_of_elements(list_of_functions_with_lots_of_args)
 
         return self.parents
-
 
     def build_core(self):
         print("this are parentsssssss: ", self.parents)

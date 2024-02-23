@@ -51,9 +51,10 @@ def uf_solver(cube):
 
     # Step3 - Use Top-Level and Congruence, untill there is no change in parents (at the list of lists)
     last_state_parents = cc.parents.copy()
-    # Use of Top Level
+    # Use of Top Level and Congruence
     while(True):
         cc.parents = cc.merge_using_toplevel()
+        cc.merge_using_congruence(all_elements_in_cube, all_function_symbols_in_cube)
         print("###new merged parents toplevel:")
         cc.print_list_of_lists()
 
@@ -63,9 +64,6 @@ def uf_solver(cube):
 
         # Keep a copy of the current state of parents
         last_state_parents = cc.parents.copy() 
-
-    # Use of Congruence - (maybe i need to insert it inside the while loop)
-    cc.parents = cc.merge_using_congruence(all_elements_in_cube, all_function_symbols_in_cube)
 
     # Checks functions with more than 1 arg - (maybe i need to insert it inside the while loop)
     cc.parents = cc.merge_function_with_many_args(all_elements_in_cube)
@@ -115,13 +113,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
-
-
-
-
-
